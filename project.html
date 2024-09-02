@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crypto Wallet Simulator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(
+          rgba(0, 0, 0, 0.4), 
+          rgba(0, 0, 0, 0.4)
+        ), 
+        url('https://www.example.com/background-image.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      width: 80%;
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .balance {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    .portfolio {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .button {
+      background-color: #4CAF50;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .button:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Crypto Wallet Simulator</h1>
+    <p>Enter your name and email to start the simulation:</p>
+    <input type="text" id="name" placeholder="Name">
+    <input type="email" id="email" placeholder="Email">
+    <button id="start-simulation" class="button">Start Simulation</button>
+    <div class="balance" id="balance">$0.00</div>
+    <div class="portfolio" id="portfolio">Portfolio: </div>
+    <button id="buy-crypto" class="button" disabled>Buy Crypto</button>
+    <button id="sell-crypto" class="button" disabled>Sell Crypto</button>
+    <button id="view-portfolio" class="button" disabled>View Portfolio</button>
+    <button id="exit-simulation" class="button" disabled>Exit Simulation</button>
+  </div>
+
+  <script>
+    let balance = 0;
+    let portfolio = {};
+    let simulationStarted = false;
+
+    document.getElementById("start-simulation").addEventListener("click", startSimulation);
+    document.getElementById("buy-crypto").addEventListener("click", buyCrypto);
+    document.getElementById("sell-crypto").addEventListener("click", sellCrypto);
+    document.getElementById("view-portfolio").addEventListener("click", viewPortfolio);
+    document.getElementById("exit-simulation").addEventListener("click", exitSimulation);
+
+    function startSimulation() {
+      if (!simulationStarted) {
+        balance = 2000.00;
+        portfolio = {};
+
+        document.getElementById("balance").innerHTML = $${balance.toFixed(2)};
+        document.getElementById("portfolio").innerHTML = "Portfolio: ";
+        document.getElementById("buy-crypto").disabled = false;
+        document.getElementById("sell-crypto").disabled = false;
+        document.getElementById("view-portfolio").disabled = false;
+        document.getElementById("exit-simulation").disabled = false;
+        simulationStarted = true;
+      }
+    }
+
+    function buyCrypto() {
+      let cryptoPrice = Math.random() * (2000 - 100) + 100;
+
+      if (confirm(Do you want to buy crypto at $${cryptoPrice.toFixed(2)}?)) {
+        if (balance >= cryptoPrice) {
+          balance -= cryptoPrice;
+          portfolio["Crypto"] = cryptoPrice;
+
+          document.getElementById("balance").innerHTML = $${balance.toFixed(2)};
+          document.getElementById("portfolio").innerHTML = Portfolio: Crypto - $${cryptoPrice.toFixed(2)};
+        } else {
+          alert("You don't have enough balance to buy crypto.");
+        }
+      }
+    }
+
+    function sellCrypto() {
+      if (portfolio["Crypto"]) {
+        let cryptoPrice = Math.random() * (2000 - 100) + 100;
+
+        if (confirm(Do you want to sell crypto at $${cryptoPrice.toFixed(2)}?)) {
+          balance += cryptoPrice;
+          delete portfolio["Crypto"];
+
+          document.getElementById("balance").innerHTML = $${balance.toFixed(2)};
+          document.getElementById("portfolio").innerHTML = "Portfolio: ";
+        }
+      } else {
+        alert("You don't have any crypto to sell.");
+      }
+    }
+
+    function viewPortfolio() {
+      if (Object.keys(portfolio).length === 0) {
+        alert("Your portfolio is empty.");
+      } else {
+        alert(`Your portfolio: ${Object.keys(portfolio).map(key => ${key} - $${portfolio[key].toFixed(2)}).join(", ")}`);
+      }
+    }
+
+    function exitSimulation() {
+      alert(Simulation ended. Your final balance is $${balance.toFixed(2)});
+      document.getElementById("buy-crypto").disabled = true;
+      document.getElementById("sell-crypto").disabled = true;
+      document.getElementById("view-portfolio").disabled = true;
+      document.getElementById("exit-simulation").disabled = true;
+    }
+  </script>
+</body>
+</html>
+
